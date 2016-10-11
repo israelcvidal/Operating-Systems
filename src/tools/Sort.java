@@ -3,7 +3,7 @@ package tools;
 import java.util.ArrayList;
 import algorithms.Process;
 
-public class Order {
+public class Sort {
 	//Ordenate the file by the number in "index" in each line.
 	
 	public static ArrayList<Process> order(ArrayList<Process> processes, String field){

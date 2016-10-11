@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Algorithms {
 	public static int fcfs(ArrayList<Process> processes){
-		ArrayList<Process> orderedByArrival = Order.order(processes, "arrivalTime");
+		ArrayList<Process> orderedByArrival = Sort.order(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
 		ArrayList<Process> running = new ArrayList<Process>();
 		Process process;

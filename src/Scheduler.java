@@ -6,7 +6,7 @@ import algorithms.Algorithms;
 import algorithms.Process;
 import tools.ProcessesFromFile;
 import tools.Statistics;
-public class Escalonador {
+public class Scheduler {
 
 	public static void main(String[] args) {
 		try {
@@ -34,7 +34,6 @@ public class Escalonador {
 				if (Integer.valueOf(outputType) == 1){
 					int totalTime = Algorithms.fcfs(processes);
 					Statistics statistics = new Statistics(processes, totalTime);
-//					System.out.println("entrou");
 					statistics.calculate();
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
