@@ -1,7 +1,6 @@
 package algorithms;
 import tools.*; 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 public class Algorithms {
 	public static int fcfs(ArrayList<Process> processes){
@@ -57,6 +56,7 @@ public class Algorithms {
 		
 		return timer;
 	}
+
 	public static int fcfs(ArrayList<Process> processes, FileManager writer){
 
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
@@ -114,6 +114,7 @@ public class Algorithms {
 		
 		return timer;
 	}
+
 	public static int sjf(ArrayList<Process> processes){
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -224,6 +225,7 @@ public class Algorithms {
 		
 		return timer;
 	}
+
 	public static int sjfp(ArrayList<Process> processes){
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -285,6 +287,7 @@ public class Algorithms {
 		
 		return timer;
 	}
+
 	public static int sjfp(ArrayList<Process> processes, FileManager writer) {
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -355,7 +358,6 @@ public class Algorithms {
 		return timer;
 	}
 
-	
 	public static int priority(ArrayList<Process> processes){
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -409,8 +411,8 @@ public class Algorithms {
 //		}
 		
 		return timer;
-	}
-		
+	}	
+
 	public static int priority(ArrayList<Process> processes, FileManager writer){
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -465,8 +467,8 @@ public class Algorithms {
 //		}
 		
 		return timer;
-	}
-	
+	}	
+
 	public static int priorityp(ArrayList<Process> processes){
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -528,6 +530,7 @@ public class Algorithms {
 		
 		return timer;
 	}
+
 	public static int priorityp(ArrayList<Process> processes, FileManager writer) {
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -649,9 +652,9 @@ public class Algorithms {
 					}
 				}
 			}
-			if(!running.isEmpty()){
-				System.out.println("tempo " + timer + " executed " +  running.get(0).getProcessId());
-			}
+//			if(!running.isEmpty()){
+//				System.out.println("tempo " + timer + " executed " +  running.get(0).getProcessId());
+//			}
 			timer++;	 
 		}
 //		for (Process aux : processes) {
@@ -660,6 +663,7 @@ public class Algorithms {
 		
 		return timer;
 	}
+
 	public static int rr(ArrayList<Process> processes, int timeQuantum, FileManager writer) {
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -668,24 +672,7 @@ public class Algorithms {
 		
 		int timer = 0;
 		while(  !sortedByArrival.isEmpty() || !ready.isEmpty() || !running.isEmpty()){
-			
-			System.out.println("\nTIMER: " + timer);
-			
-			System.out.println("\nREADY:");
-			for (Process process2 : ready) {
-				System.out.println(process2);
-			}
-			
-			System.out.println("\nRUNNING:");
-			for (Process process2 : running) {
-				System.out.println(process2);
-			}
-			
-			
-			
-			
-			
-			
+		
 			while(!sortedByArrival.isEmpty() && sortedByArrival.get(0).getArrivalTime() <= timer){
 					ready.add(sortedByArrival.remove(0));
 			}
@@ -702,13 +689,12 @@ public class Algorithms {
 					running.add(ready.remove(index));
 				}
 				else{
-					if(running.get(0).getCurrentBurstTime() != 0 && running.get(0).getPriority() > ready.get(index).getPriority()){
-						running.add(ready.remove(index));
+					if(running.get(0).getCurrentBurstTime() != 0  && running.get(0).getExecutedInARoll() >= timeQuantum){
+						running.add(ready.remove(0));
 						writer.write( running.get(0), running.get(0).getExecutedInARoll());
 						running.get(0).resetExecutedInARoll();
-						ready.add(0,running.remove(0));	
+						ready.add(running.remove(0));
 					}
-					
 				}
 			}
 			

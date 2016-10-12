@@ -12,7 +12,7 @@ import tools.Statistics;
 public class Scheduler {
 
 	public static void main(String[] args) {
-		int timeQuantum = 2;
+		int timeQuantum = 4;
 		try {
 			if(args.length < 3)
 				throw new Exception("Quantidade de argumentos inválida");
@@ -120,7 +120,7 @@ public class Scheduler {
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
 					FileManager writer = new FileManager("RR-log");
-					//Algorithms.rr(processes, timeQuantum, writer);
+					Algorithms.rr(processes, timeQuantum, writer);
 					writer.close();
 					System.out.println("SCHEDULING LOG SAVED IN 'RR-log'");
 
