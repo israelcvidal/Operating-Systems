@@ -12,6 +12,7 @@ import tools.Statistics;
 public class Scheduler {
 
 	public static void main(String[] args) {
+		int timeQuantum = 2;
 		try {
 			if(args.length < 3)
 				throw new Exception("Quantidade de argumentos inválida");
@@ -106,6 +107,22 @@ public class Scheduler {
 					Algorithms.priorityp(processes, writer);
 					writer.close();
 					System.out.println("SCHEDULING LOG SAVED IN 'PRIORITYP-log'");
+
+				}else throw new Exception("Invalid output. Try 1 or 2!");
+				break;
+				
+			case "RR":
+				if (Integer.valueOf(outputType) == 1){
+					int totalTime = Algorithms.rr(processes, timeQuantum);
+					Statistics statistics = new Statistics(processes, totalTime);
+					statistics.calculate();
+					System.out.println("RR:");
+					System.out.println(statistics);
+				}else if(Integer.valueOf(outputType) == 2){
+					FileManager writer = new FileManager("RR-log");
+					//Algorithms.rr(processes, timeQuantum, writer);
+					writer.close();
+					System.out.println("SCHEDULING LOG SAVED IN 'RR-log'");
 
 				}else throw new Exception("Invalid output. Try 1 or 2!");
 				break;
