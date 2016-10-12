@@ -6,7 +6,7 @@ import algorithms.Process;
 public class Sort {
 	//Ordenate the file by the number in "index" in each line.
 	
-	public static ArrayList<Process> order(ArrayList<Process> processes, String field){
+	public static ArrayList<Process> sort(ArrayList<Process> processes, String field){
 		@SuppressWarnings("unchecked")
 		ArrayList<Process> processesCopy = (ArrayList<Process>)processes.clone(); 
 		switch(field.toUpperCase()){

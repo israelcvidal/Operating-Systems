@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import algorithms.Algorithms;
 import algorithms.Process;
+import tools.FileManager;
 import tools.ProcessesFromFile;
 import tools.Statistics;
 public class Scheduler {
@@ -39,10 +40,38 @@ public class Scheduler {
 					statistics.calculate();
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
-					
+					FileManager writer = new FileManager("FCFS-log");
+					Algorithms.fcfs(processes, writer);
+					writer.close();
 				}else throw new Exception("Tipo de saída inválida. Tente 1 ou 2!");
 				break;
-
+			
+			case "SJF":
+				if (Integer.valueOf(outputType) == 1){
+					int totalTime = Algorithms.sjf(processes);
+					Statistics statistics = new Statistics(processes, totalTime);
+					statistics.calculate();
+					System.out.println(statistics);
+				}else if(Integer.valueOf(outputType) == 2){
+					FileManager writer = new FileManager("SJF-log");
+					Algorithms.sjf(processes, writer);
+					writer.close();
+				}else throw new Exception("Tipo de saída inválida. Tente 1 ou 2!");
+				break;
+				
+			case "SJFP":
+				if (Integer.valueOf(outputType) == 1){
+					int totalTime = Algorithms.sjfp(processes);
+					Statistics statistics = new Statistics(processes, totalTime);
+					statistics.calculate();
+					System.out.println(statistics);
+				}else if(Integer.valueOf(outputType) == 2){
+					FileManager writer = new FileManager("SJFP-log");
+					Algorithms.sjfp(processes, writer);
+					writer.close();
+				}else throw new Exception("Tipo de saída inválida. Tente 1 ou 2!");
+				break;
+				
 			default:
 				break;
 			}

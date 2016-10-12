@@ -2,9 +2,10 @@ package algorithms;
 
 public class Process {
 	private int startTime, finishTime, waitingTime, processId, arrivalTime, burstTime, priority, alreadyExecuted, responseTime ;
+	private int executedInARoll;
 	private boolean executing;
 	public Process(int processId, int arrivalTime, int burstTime, int priority){
-		startTime = finishTime = waitingTime = alreadyExecuted = 0;
+		executedInARoll = startTime = finishTime = waitingTime = alreadyExecuted = 0;
 		this.processId = processId;
 		this.arrivalTime = arrivalTime;
 		this.burstTime = burstTime;
@@ -75,14 +76,6 @@ public class Process {
 	public void calculateWaitingTime() {
 		this.waitingTime = (this.finishTime - this.arrivalTime - this.burstTime);
 	}
-	
-	public void increaseWaitingTime(){
-		waitingTime++;
-	}
-	
-	public void decreaseWaitingTime(){
-		waitingTime--;
-	}
 
 	public int getProcessId() {
 		return processId;
@@ -100,11 +93,28 @@ public class Process {
 		this.alreadyExecuted++;
 	}
 	
-	public int getAlreadyExecuted(){
-		return alreadyExecuted;
+//	public int getAlreadyExecuted(){
+//		return alreadyExecuted;
+//	}
+	
+	public int getCurrentBurstTime(){
+		return burstTime - alreadyExecuted;
 	}
 
 	public int getProcessTime(){
 		return finishTime-startTime;
+	}
+
+	public int getExecutedInARoll(){
+		return executedInARoll;
+	}
+
+	
+	public void increaseExecutedInARoll(){
+		executedInARoll++;
+	}
+	
+	public void resetExecutedInARoll(){
+		executedInARoll = 0;
 	}
 }
