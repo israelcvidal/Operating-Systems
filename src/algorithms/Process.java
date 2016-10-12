@@ -13,11 +13,18 @@ public class Process {
 		this.executing = false;		
 	
 	}
-	public String toString(){
-		return 	"processId: " + processId + ", arrivalTime: "+ arrivalTime + ", startTime: " + startTime + ", finishTime: " + finishTime + ", burstTime: " + burstTime + ", priority: " + priority + ", waitingTime: "+ waitingTime + ", responseTime: " + responseTime;
+//	public String toString(){
+//		return 	"processId: " + processId + ", arrivalTime: "+ arrivalTime + ", startTime: " + startTime + ", finishTime: " + finishTime + ", burstTime: " + burstTime + ", priority: " + priority + ", waitingTime: "+ waitingTime + ", responseTime: " + responseTime;
+//
+//	}
 
+	public String toString(){
+		String str = "id: " + processId + ", priority: " + priority;
+		str = str.concat("\nexecutedInARoll: " + executedInARoll);
+		str = str.concat("\nalreadyExecuted: " + alreadyExecuted);
+		str = str.concat("\ncurrentBurstTime: " + getCurrentBurstTime() + "\n");
+		return str;
 	}
-	
 	public void calculateResponseTime(){
 		this.responseTime = this.startTime - this.arrivalTime;
 	}

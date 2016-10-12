@@ -57,7 +57,6 @@ public class Algorithms {
 		
 		return timer;
 	}
-
 	public static int fcfs(ArrayList<Process> processes, FileManager writer){
 
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
@@ -115,7 +114,6 @@ public class Algorithms {
 		
 		return timer;
 	}
-	
 	public static int sjf(ArrayList<Process> processes){
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -171,7 +169,6 @@ public class Algorithms {
 		return timer;
 	}
 		
-	
 	public static int sjf(ArrayList<Process> processes, FileManager writer){
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -227,7 +224,6 @@ public class Algorithms {
 		
 		return timer;
 	}
-	
 	public static int sjfp(ArrayList<Process> processes){
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -253,7 +249,7 @@ public class Algorithms {
 					running.add(ready.remove(index));
 				}
 				else{
-					if(running.get(0).getCurrentBurstTime() > ready.get(index).getCurrentBurstTime()){
+					if(running.get(0).getCurrentBurstTime() != 0 && running.get(0).getCurrentBurstTime() > ready.get(index).getCurrentBurstTime()){
 						running.add(ready.remove(index));
 						ready.add(0,running.remove(0));
 					}
@@ -289,7 +285,6 @@ public class Algorithms {
 		
 		return timer;
 	}
-
 	public static int sjfp(ArrayList<Process> processes, FileManager writer) {
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -315,7 +310,7 @@ public class Algorithms {
 					running.add(ready.remove(index));
 				}
 				else{
-					if(running.get(0).getCurrentBurstTime() > ready.get(index).getCurrentBurstTime()){
+					if(running.get(0).getCurrentBurstTime() != 0 && running.get(0).getCurrentBurstTime() > ready.get(index).getCurrentBurstTime()){
 						running.add(ready.remove(index));  
 						writer.write( running.get(0), running.get(0).getExecutedInARoll());
 						running.get(0).resetExecutedInARoll();
@@ -472,6 +467,8 @@ public class Algorithms {
 		return timer;
 	}
 	
+
+	//PROBLEM!
 	public static int priorityp(ArrayList<Process> processes){
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
@@ -497,7 +494,7 @@ public class Algorithms {
 					running.add(ready.remove(index));
 				}
 				else{
-					if(running.get(0).getPriority() > ready.get(index).getPriority()){
+					if(running.get(0).getCurrentBurstTime() != 0  && running.get(0).getPriority() > ready.get(index).getPriority()){
 						running.add(ready.remove(index));
 						ready.add(0,running.remove(0));
 					}
@@ -543,6 +540,23 @@ public class Algorithms {
 		int timer = 0;
 		while(  !sortedByArrival.isEmpty() || !ready.isEmpty() || !running.isEmpty()){
 			
+			System.out.println("\nTIMER: " + timer);
+			
+			System.out.println("\nREADY:");
+			for (Process process2 : ready) {
+				System.out.println(process2);
+			}
+			
+			System.out.println("\nRUNNING:");
+			for (Process process2 : running) {
+				System.out.println(process2);
+			}
+			
+			
+			
+			
+			
+			
 			while(!sortedByArrival.isEmpty() && sortedByArrival.get(0).getArrivalTime() <= timer){
 					ready.add(sortedByArrival.remove(0));
 			}
@@ -559,7 +573,7 @@ public class Algorithms {
 					running.add(ready.remove(index));
 				}
 				else{
-					if(running.get(0).getPriority() > ready.get(index).getPriority()){
+					if(running.get(0).getCurrentBurstTime() != 0 && running.get(0).getPriority() > ready.get(index).getPriority()){
 						running.add(ready.remove(index));
 						writer.write( running.get(0), running.get(0).getExecutedInARoll());
 						running.get(0).resetExecutedInARoll();
@@ -597,14 +611,14 @@ public class Algorithms {
 			}
 			timer++;	 
 		}
-		for (Process aux : processes) {
-			System.out.println(aux);
-		}
+//		for (Process aux : processes) {
+//			System.out.println(aux);
+//		}
 		
 		return timer;
 	}
 
-//TO DO:
+	//TO DO:
 
 //	public static int rr(ArrayList<Process> processes){
 //		
