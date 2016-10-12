@@ -119,7 +119,7 @@ public class Scheduler {
 					System.out.println("RR:");
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
-					FileManager writer = new FileManager("RR-log");
+					FileManager writer = new FileManager("/Users/israelcvidal/git/scheduler/files/logs/RR-log");
 					Algorithms.rr(processes, timeQuantum, writer);
 					writer.close();
 					System.out.println("SCHEDULING LOG SAVED IN 'RR-log'");
