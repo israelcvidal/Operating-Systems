@@ -19,7 +19,7 @@ public class FileManager {
 	}
 	
 	public void write(Process process, int time){
-		writer.println("processId: " + process.getProcessId() + " executed:  " + time);
+		writer.println("processId: " + process.getProcessId() + " executed: " + time);
 	}
 	
 	public void close(){

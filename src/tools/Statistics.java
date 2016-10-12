@@ -67,17 +67,17 @@ public class Statistics {
 		 
 		//calculating the turnArround mean
 		for (Process process : processes) {
-			sum += process.getProcessTime();
+			sum += process.getBurstTime() + process.getWaitingTime();
 		}
 		turnArround = sum/processesNumber;
-		
+
 		//calculating the waiting time mean
 		sum = 0;
 		for (Process process : processes) {
 			sum += process.getWaitingTime();
 		}
 		waitingTime = sum/processesNumber;
-		
+
 		//calculating the response time mean
 		sum = 0;
 		for (Process process : processes) {
@@ -91,7 +91,16 @@ public class Statistics {
 	}
 	
 	public String toString(){
-		return "processesNumber: " + processesNumber+ ", throughput: " + throughput + ", turnaround: " + turnArround + ", waitingTime: " + waitingTime + ", responseTime: "+ responseTime;
+		String str;
+		str = "----------STATISTICS----------";
+		str = str.concat("\nTOTAL TIME: " + totalTime);
+		str = str.concat("\nNUMBER OF PROCESSES: " + processesNumber);
+		str = str.concat("\nAVERAGE THROUGHPUT TIME: " + throughput ); 
+		str = str.concat("\nAVERAGE TURNAROUND TIME: " + turnArround);
+		str = str.concat("\nAVERAGE WAITING TIME: " + waitingTime);
+		str = str.concat("\nAVERAGE RESPONSE TIME: " + responseTime);
+		
+		return str;
 	}
 	
 }

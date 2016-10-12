@@ -37,12 +37,14 @@ public class Scheduler {
 				if (Integer.valueOf(outputType) == 1){
 					int totalTime = Algorithms.fcfs(processes);
 					Statistics statistics = new Statistics(processes, totalTime);
+					System.out.println("FCFS:");
 					statistics.calculate();
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
 					FileManager writer = new FileManager("FCFS-log");
 					Algorithms.fcfs(processes, writer);
 					writer.close();
+					System.out.println("SCHEDULING LOG SAVED IN 'FCFS-log'");
 				}else throw new Exception("Tipo de saída inválida. Tente 1 ou 2!");
 				break;
 			
@@ -51,11 +53,14 @@ public class Scheduler {
 					int totalTime = Algorithms.sjf(processes);
 					Statistics statistics = new Statistics(processes, totalTime);
 					statistics.calculate();
+					System.out.println("SJF:");
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
 					FileManager writer = new FileManager("SJF-log");
 					Algorithms.sjf(processes, writer);
 					writer.close();
+					System.out.println("SCHEDULING LOG SAVED IN 'SJF-log'");
+
 				}else throw new Exception("Tipo de saída inválida. Tente 1 ou 2!");
 				break;
 				
@@ -63,17 +68,49 @@ public class Scheduler {
 				if (Integer.valueOf(outputType) == 1){
 					int totalTime = Algorithms.sjfp(processes);
 					Statistics statistics = new Statistics(processes, totalTime);
+					System.out.println("SJFP:");
 					statistics.calculate();
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
 					FileManager writer = new FileManager("SJFP-log");
 					Algorithms.sjfp(processes, writer);
 					writer.close();
-				}else throw new Exception("Tipo de saída inválida. Tente 1 ou 2!");
+					System.out.println("SCHEDULING LOG SAVED IN 'SJFP-log'");
+				}else throw new Exception("Invalid output. Try 1 or 2!");
 				break;
 				
-			default:
+			case "PRIORITY":
+				if (Integer.valueOf(outputType) == 1){
+					int totalTime = Algorithms.priority(processes);
+					Statistics statistics = new Statistics(processes, totalTime);
+					statistics.calculate();
+					System.out.println("PRIORITY:");
+					System.out.println(statistics);
+				}else if(Integer.valueOf(outputType) == 2){
+					FileManager writer = new FileManager("PRIORITY-log");
+					Algorithms.priority(processes, writer);
+					writer.close();
+					System.out.println("SCHEDULING LOG SAVED IN 'PRIORITY-log'");
+				}else throw new Exception("Invalid output. Try 1 or 2!");
 				break;
+			
+			case "PRIORITYP":
+				if (Integer.valueOf(outputType) == 1){
+					int totalTime = Algorithms.priorityp(processes);
+					Statistics statistics = new Statistics(processes, totalTime);
+					statistics.calculate();
+					System.out.println("PRIORITYP:");
+					System.out.println(statistics);
+				}else if(Integer.valueOf(outputType) == 2){
+					FileManager writer = new FileManager("PRIORITYP-log");
+					Algorithms.priorityp(processes, writer);
+					writer.close();
+					System.out.println("SCHEDULING LOG SAVED IN 'PRIORITYP-log'");
+
+				}else throw new Exception("Invalid output. Try 1 or 2!");
+				break;
+				
+			default: throw new Exception("Invalid Algorithm!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
