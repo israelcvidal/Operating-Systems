@@ -3,6 +3,8 @@ package scheduler;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+
+import algorithms.AlgorithmReturn;
 import algorithms.Algorithms;
 import algorithms.Process;
 import tools.FileManager;
@@ -12,8 +14,8 @@ public class Scheduler {
 
 	public static void main(String[] args) {
 		int timeQuantum = 2;
-//		String path = "/Users/israelcvidal/git/scheduler/files/logs/RR-log";
-		String pathLog = "/home/local/LSBD/israel.vidal/git/scheduler/files/logs/";
+		String pathLog = "/Users/israelcvidal/git/scheduler/files/logs/RR-log";
+//		String pathLog = "/home/local/LSBD/israel.vidal/git/scheduler/files/logs/";
 		try {
 			if(args.length < 3)
 				throw new Exception("Quantidade de argumentos inválida");
@@ -38,8 +40,8 @@ public class Scheduler {
 			case "FCFS":
 				if (Integer.valueOf(outputType) == 1){
 					FileManager fakeWriter = new FileManager();
-					int totalTime = Algorithms.fcfs(processes, fakeWriter);
-					Statistics statistics = new Statistics(processes, totalTime);
+					AlgorithmReturn  algorithmReturn = Algorithms.fcfs(processes, fakeWriter);
+					Statistics statistics = new Statistics(processes, algorithmReturn);
 					System.out.println("FCFS:");
 					statistics.calculate();
 					System.out.println(statistics);
@@ -54,8 +56,8 @@ public class Scheduler {
 			case "SJF":
 				if (Integer.valueOf(outputType) == 1){
 					FileManager fakeWriter = new FileManager();
-					int totalTime = Algorithms.sjf(processes, fakeWriter);
-					Statistics statistics = new Statistics(processes, totalTime);
+					AlgorithmReturn algorithmReturn = Algorithms.sjf(processes, fakeWriter);
+					Statistics statistics = new Statistics(processes, algorithmReturn);
 					statistics.calculate();
 					System.out.println("SJF:");
 					System.out.println(statistics);
@@ -71,8 +73,8 @@ public class Scheduler {
 			case "SJFP":
 				if (Integer.valueOf(outputType) == 1){
 					FileManager fakeWriter = new FileManager();
-					int totalTime = Algorithms.sjfp(processes, fakeWriter);
-					Statistics statistics = new Statistics(processes, totalTime);
+					AlgorithmReturn algorithmReturn = Algorithms.sjfp(processes, fakeWriter);
+					Statistics statistics = new Statistics(processes, algorithmReturn);
 					System.out.println("SJFP:");
 					statistics.calculate();
 					System.out.println(statistics);
@@ -87,8 +89,8 @@ public class Scheduler {
 			case "PRIORITY":
 				if (Integer.valueOf(outputType) == 1){
 					FileManager fakeWriter = new FileManager();
-					int totalTime = Algorithms.priority(processes, fakeWriter);
-					Statistics statistics = new Statistics(processes, totalTime);
+					AlgorithmReturn algorithmReturn = Algorithms.priority(processes, fakeWriter);
+					Statistics statistics = new Statistics(processes, algorithmReturn);
 					statistics.calculate();
 					System.out.println("PRIORITY:");
 					System.out.println(statistics);
@@ -103,8 +105,8 @@ public class Scheduler {
 			case "PRIORITYP":
 				if (Integer.valueOf(outputType) == 1){
 					FileManager fakeWriter = new FileManager();
-					int totalTime = Algorithms.priorityp(processes, fakeWriter);
-					Statistics statistics = new Statistics(processes, totalTime);
+					AlgorithmReturn algorithmReturn = Algorithms.priorityp(processes, fakeWriter);
+					Statistics statistics = new Statistics(processes, algorithmReturn);
 					statistics.calculate();
 					System.out.println("PRIORITYP:");
 					System.out.println(statistics);
@@ -120,8 +122,8 @@ public class Scheduler {
 			case "RR":
 				if (Integer.valueOf(outputType) == 1){
 					FileManager fakeWriter = new FileManager();
-					int totalTime = Algorithms.rr(processes, timeQuantum, fakeWriter);
-					Statistics statistics = new Statistics(processes, totalTime);
+					AlgorithmReturn algorithmReturn = Algorithms.rr(processes, timeQuantum, fakeWriter);
+					Statistics statistics = new Statistics(processes, algorithmReturn);
 					statistics.calculate();
 					System.out.println("RR:");
 					System.out.println(statistics);

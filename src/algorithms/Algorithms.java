@@ -3,16 +3,18 @@ import tools.*;
 import java.util.ArrayList;
 
 public class Algorithms {
-	public static int fcfs(ArrayList<Process> processes, FileManager writer){
-
+	
+	public static AlgorithmReturn fcfs(ArrayList<Process> processes, FileManager writer){
+		AlgorithmReturn algorithmReturn = new AlgorithmReturn();
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
 		ArrayList<Process> running = new ArrayList<Process>();
 		Process process;
+		Boolean someoneExecuted;
 		
 		int timer = 0;
 		while(  !sortedByArrival.isEmpty() || !ready.isEmpty() || !running.isEmpty()){
-
+			someoneExecuted = false;
 			if(!sortedByArrival.isEmpty()){
 				if(sortedByArrival.get(0).getArrivalTime() <= timer){
 					ready.add(sortedByArrival.remove(0));
@@ -26,6 +28,7 @@ public class Algorithms {
 			}
 			
 			if(!running.isEmpty()){
+				someoneExecuted = true;
 				process = running.get(0);
 				if(!process.isExecuting()){
 					process.setExecuting(true);
@@ -44,33 +47,36 @@ public class Algorithms {
 						running.remove(0);
 						//decrease timer so the next process can start at the same time the last one finished
 						timer--;
-						
-						
+						algorithmReturn.decreaseCpuUse();
 					}
 				}
 			}
 			
 			timer++;
-			 
+			if (someoneExecuted) {
+				algorithmReturn.increaseCpuUse();
+			} 
 		}
 //		for (Process aux : processes) {
 //			//System.out.println("id: " + process.getProcessId() + ", startTime: " + process.getStartTime() + ", finishTime: " + process.getFinishTime());
 //			System.out.println(aux);
 //		}
 		
-		return timer;
+		algorithmReturn.setTotalTime(timer);
+		return algorithmReturn;
 	}
-
 	
-	public static int sjf(ArrayList<Process> processes, FileManager writer){
+	public static AlgorithmReturn sjf(ArrayList<Process> processes, FileManager writer){
+		AlgorithmReturn algorithmReturn = new AlgorithmReturn();
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
 		ArrayList<Process> running = new ArrayList<Process>();
 		Process process;
-		
+		Boolean someoneExecuted;
+
 		int timer = 0;
 		while(  !sortedByArrival.isEmpty() || !ready.isEmpty() || !running.isEmpty()){
-			
+			someoneExecuted = false;
 			while(!sortedByArrival.isEmpty() && sortedByArrival.get(0).getArrivalTime() <= timer){
 					ready.add(sortedByArrival.remove(0));
 			}
@@ -88,6 +94,7 @@ public class Algorithms {
 			}
 			
 			if(!running.isEmpty()){
+				someoneExecuted = true;
 				process = running.get(0);
 				if(!process.isExecuting()){
 					process.setExecuting(true);
@@ -106,28 +113,33 @@ public class Algorithms {
 						running.remove(0);
 						//decrease timer so the next process can start at the same time the last one finished
 						timer--;
+						algorithmReturn.decreaseCpuUse();
 					}
 				}
 			}
-			timer++;	 
+			timer++;
+			if (someoneExecuted) {
+				algorithmReturn.increaseCpuUse();
+			} 
 		}
 //		for (Process aux : processes) {
 //			System.out.println(aux);
 //		}
-		
-		return timer;
+		algorithmReturn.setTotalTime(timer);
+		return algorithmReturn;
 	}
 
-
-	public static int sjfp(ArrayList<Process> processes, FileManager writer) {
+	public static AlgorithmReturn sjfp(ArrayList<Process> processes, FileManager writer) {
+		AlgorithmReturn algorithmReturn = new AlgorithmReturn();
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
 		ArrayList<Process> running = new ArrayList<Process>();
 		Process process;
-		
+		Boolean someoneExecuted;
+
 		int timer = 0;
 		while(  !sortedByArrival.isEmpty() || !ready.isEmpty() || !running.isEmpty()){
-			
+			someoneExecuted = false;
 			while(!sortedByArrival.isEmpty() && sortedByArrival.get(0).getArrivalTime() <= timer){
 					ready.add(sortedByArrival.remove(0));
 			}
@@ -149,12 +161,14 @@ public class Algorithms {
 						writer.write( running.get(0), running.get(0).getExecutedInARoll());
 						running.get(0).resetExecutedInARoll();
 						ready.add(0,running.remove(0));	
+						algorithmReturn.increaseContextSwap();
 					}
 					
 				}
 			}
 			
 			if(!running.isEmpty()){
+				someoneExecuted = true;
 				process = running.get(0);
 				if(!process.isExecuting()){
 					process.setExecuting(true);
@@ -177,28 +191,36 @@ public class Algorithms {
 						process.resetExecutedInARoll();
 						//decrease timer so the next process can start at the same time the last one finished
 						timer--;
+						algorithmReturn.decreaseCpuUse();
 					}
 				}
 			}
-			timer++;	 
+			timer++;	
+			if (someoneExecuted) {
+				algorithmReturn.increaseCpuUse();
+			} 
 		}
 //		for (Process aux : processes) {
 //			System.out.println(aux);
 //		}
 		
-		return timer;
+		algorithmReturn.setTotalTime(timer);
+		return algorithmReturn;
 	}
 
-	
-	public static int priority(ArrayList<Process> processes, FileManager writer){
+	public static AlgorithmReturn priority(ArrayList<Process> processes, FileManager writer){
+		AlgorithmReturn algorithmReturn = new AlgorithmReturn();
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
 		ArrayList<Process> running = new ArrayList<Process>();
 		Process process;
+		Boolean someoneExecuted;
+
 		
 		int timer = 0;
 		while(  !sortedByArrival.isEmpty() || !ready.isEmpty() || !running.isEmpty()){
-			
+			someoneExecuted = false;
+
 			while(!sortedByArrival.isEmpty() && sortedByArrival.get(0).getArrivalTime() <= timer){
 					ready.add(sortedByArrival.remove(0));
 			}
@@ -216,6 +238,7 @@ public class Algorithms {
 			}
 			
 			if(!running.isEmpty()){
+				someoneExecuted = true;
 				process = running.get(0);
 				if(!process.isExecuting()){
 					process.setExecuting(true);
@@ -234,28 +257,34 @@ public class Algorithms {
 						running.remove(0);
 						//decrease timer so the next process can start at the same time the last one finished
 						timer--;
+						algorithmReturn.decreaseCpuUse();
 					}
 				}
 			}
-			timer++;	 
+			timer++;	
+			if (someoneExecuted) {
+				algorithmReturn.increaseCpuUse();
+			}
 		}
 //		for (Process aux : processes) {
 //			System.out.println(aux);
 //		}
-		
-		return timer;
+		algorithmReturn.setTotalTime(timer);
+		return algorithmReturn;
 	}	
-
 	
-	public static int priorityp(ArrayList<Process> processes, FileManager writer) {
+	public static AlgorithmReturn priorityp(ArrayList<Process> processes, FileManager writer) {
+		AlgorithmReturn algorithmReturn = new AlgorithmReturn();
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
 		ArrayList<Process> running = new ArrayList<Process>();
 		Process process;
+		Boolean someoneExecuted;
 		
 		int timer = 0;
 		while(  !sortedByArrival.isEmpty() || !ready.isEmpty() || !running.isEmpty()){
-			
+			someoneExecuted = false;
+
 			while(!sortedByArrival.isEmpty() && sortedByArrival.get(0).getArrivalTime() <= timer){
 					ready.add(sortedByArrival.remove(0));
 			}
@@ -277,12 +306,14 @@ public class Algorithms {
 						writer.write( running.get(0), running.get(0).getExecutedInARoll());
 						running.get(0).resetExecutedInARoll();
 						ready.add(0,running.remove(0));	
+						algorithmReturn.increaseContextSwap();
 					}
 					
 				}
 			}
 			
 			if(!running.isEmpty()){
+				someoneExecuted = true;
 				process = running.get(0);
 				if(!process.isExecuting()){
 					process.setExecuting(true);
@@ -305,29 +336,37 @@ public class Algorithms {
 						process.resetExecutedInARoll();
 						//decrease timer so the next process can start at the same time the last one finished
 						timer--;
+						algorithmReturn.decreaseCpuUse();
+
 					}
 				}
 			}
 		
-			timer++;	 
+			timer++;
+			if (someoneExecuted) {
+				algorithmReturn.increaseCpuUse();
+			} 
 		}
 //		for (Process aux : processes) {
 //			System.out.println(aux);
 //		}
 		
-		return timer;
+		algorithmReturn.setTotalTime(timer);
+		return algorithmReturn;
 	}
-
 	
-	public static int rr(ArrayList<Process> processes, int timeQuantum, FileManager writer) {
+	public static AlgorithmReturn rr(ArrayList<Process> processes, int timeQuantum, FileManager writer) {
+		AlgorithmReturn algorithmReturn = new AlgorithmReturn();
 		ArrayList<Process> sortedByArrival = Sort.sort(processes, "arrivalTime");
 		ArrayList<Process> ready = new ArrayList<Process>();
 		ArrayList<Process> running = new ArrayList<Process>();
 		Process process;
-		
+		Boolean someoneExecuted;
+
 		int timer = 0;
 		while(  !sortedByArrival.isEmpty() || !ready.isEmpty() || !running.isEmpty()){
-		
+			someoneExecuted = false;
+			
 			while(!sortedByArrival.isEmpty() && sortedByArrival.get(0).getArrivalTime() <= timer){
 					ready.add(sortedByArrival.remove(0));
 			}
@@ -349,11 +388,14 @@ public class Algorithms {
 						writer.write( running.get(0), running.get(0).getExecutedInARoll());
 						running.get(0).resetExecutedInARoll();
 						ready.add(running.remove(0));
+						algorithmReturn.increaseContextSwap();
+
 					}
 				}
 			}
 			
 			if(!running.isEmpty()){
+				someoneExecuted = true;
 				process = running.get(0);
 				if(!process.isExecuting()){
 					process.setExecuting(true);
@@ -376,20 +418,23 @@ public class Algorithms {
 						process.resetExecutedInARoll();
 						//decrease timer so the next process can start at the same time the last one finished
 						timer--;
+						algorithmReturn.decreaseCpuUse();
+
 					}
 				}
 			}
-			timer++;	 
+			timer++;	
+			if (someoneExecuted) {
+				algorithmReturn.increaseCpuUse();
+			} 
 		}
 //		for (Process aux : processes) {
 //			System.out.println(aux);
 //		}
 		
-		return timer;
+		algorithmReturn.setTotalTime(timer);
+		return algorithmReturn;
 	}
-
-	
-	
 	
 }
 
