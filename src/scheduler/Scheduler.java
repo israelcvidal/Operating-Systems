@@ -3,7 +3,6 @@ package scheduler;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-
 import algorithms.Algorithms;
 import algorithms.Process;
 import tools.FileManager;
@@ -12,7 +11,9 @@ import tools.Statistics;
 public class Scheduler {
 
 	public static void main(String[] args) {
-		int timeQuantum = 4;
+		int timeQuantum = 2;
+//		String path = "/Users/israelcvidal/git/scheduler/files/logs/RR-log";
+		String pathLog = "/home/local/LSBD/israel.vidal/git/scheduler/files/logs/";
 		try {
 			if(args.length < 3)
 				throw new Exception("Quantidade de argumentos inválida");
@@ -36,13 +37,14 @@ public class Scheduler {
 			switch (algorithm.toUpperCase()) {
 			case "FCFS":
 				if (Integer.valueOf(outputType) == 1){
-					int totalTime = Algorithms.fcfs(processes);
+					FileManager fakeWriter = new FileManager();
+					int totalTime = Algorithms.fcfs(processes, fakeWriter);
 					Statistics statistics = new Statistics(processes, totalTime);
 					System.out.println("FCFS:");
 					statistics.calculate();
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
-					FileManager writer = new FileManager("FCFS-log");
+					FileManager writer = new FileManager(pathLog + "FCFS-log");
 					Algorithms.fcfs(processes, writer);
 					writer.close();
 					System.out.println("SCHEDULING LOG SAVED IN 'FCFS-log'");
@@ -51,13 +53,14 @@ public class Scheduler {
 			
 			case "SJF":
 				if (Integer.valueOf(outputType) == 1){
-					int totalTime = Algorithms.sjf(processes);
+					FileManager fakeWriter = new FileManager();
+					int totalTime = Algorithms.sjf(processes, fakeWriter);
 					Statistics statistics = new Statistics(processes, totalTime);
 					statistics.calculate();
 					System.out.println("SJF:");
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
-					FileManager writer = new FileManager("SJF-log");
+					FileManager writer = new FileManager(pathLog + "SJF-log");
 					Algorithms.sjf(processes, writer);
 					writer.close();
 					System.out.println("SCHEDULING LOG SAVED IN 'SJF-log'");
@@ -67,13 +70,14 @@ public class Scheduler {
 				
 			case "SJFP":
 				if (Integer.valueOf(outputType) == 1){
-					int totalTime = Algorithms.sjfp(processes);
+					FileManager fakeWriter = new FileManager();
+					int totalTime = Algorithms.sjfp(processes, fakeWriter);
 					Statistics statistics = new Statistics(processes, totalTime);
 					System.out.println("SJFP:");
 					statistics.calculate();
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
-					FileManager writer = new FileManager("SJFP-log");
+					FileManager writer = new FileManager(pathLog + "SJFP-log");
 					Algorithms.sjfp(processes, writer);
 					writer.close();
 					System.out.println("SCHEDULING LOG SAVED IN 'SJFP-log'");
@@ -82,13 +86,14 @@ public class Scheduler {
 				
 			case "PRIORITY":
 				if (Integer.valueOf(outputType) == 1){
-					int totalTime = Algorithms.priority(processes);
+					FileManager fakeWriter = new FileManager();
+					int totalTime = Algorithms.priority(processes, fakeWriter);
 					Statistics statistics = new Statistics(processes, totalTime);
 					statistics.calculate();
 					System.out.println("PRIORITY:");
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
-					FileManager writer = new FileManager("PRIORITY-log");
+					FileManager writer = new FileManager(pathLog + "PRIORITY-log");
 					Algorithms.priority(processes, writer);
 					writer.close();
 					System.out.println("SCHEDULING LOG SAVED IN 'PRIORITY-log'");
@@ -97,13 +102,14 @@ public class Scheduler {
 			
 			case "PRIORITYP":
 				if (Integer.valueOf(outputType) == 1){
-					int totalTime = Algorithms.priorityp(processes);
+					FileManager fakeWriter = new FileManager();
+					int totalTime = Algorithms.priorityp(processes, fakeWriter);
 					Statistics statistics = new Statistics(processes, totalTime);
 					statistics.calculate();
 					System.out.println("PRIORITYP:");
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
-					FileManager writer = new FileManager("PRIORITYP-log");
+					FileManager writer = new FileManager(pathLog + "PRIORITYP-log");
 					Algorithms.priorityp(processes, writer);
 					writer.close();
 					System.out.println("SCHEDULING LOG SAVED IN 'PRIORITYP-log'");
@@ -113,13 +119,14 @@ public class Scheduler {
 				
 			case "RR":
 				if (Integer.valueOf(outputType) == 1){
-					int totalTime = Algorithms.rr(processes, timeQuantum);
+					FileManager fakeWriter = new FileManager();
+					int totalTime = Algorithms.rr(processes, timeQuantum, fakeWriter);
 					Statistics statistics = new Statistics(processes, totalTime);
 					statistics.calculate();
 					System.out.println("RR:");
 					System.out.println(statistics);
 				}else if(Integer.valueOf(outputType) == 2){
-					FileManager writer = new FileManager("/Users/israelcvidal/git/scheduler/files/logs/RR-log");
+					FileManager writer = new FileManager(pathLog + "RR-log");
 					Algorithms.rr(processes, timeQuantum, writer);
 					writer.close();
 					System.out.println("SCHEDULING LOG SAVED IN 'RR-log'");
