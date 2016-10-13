@@ -3,7 +3,7 @@ import csv
 from random import randint
 
 
-with open('process.csv', 'w', newline='') as csvfile:
+with open('processos.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=',', quotechar='#', quoting=csv.QUOTE_MINIMAL)
     writer.writerow(['<arrivalTime>, <processId>, <burstTime>, <priority>'])
 
