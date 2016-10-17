@@ -103,6 +103,14 @@ public class Statistics {
 		str = str.concat("\nCPU PERCENTAGE OF USE: " + cpuPercentage*100 + "%");
 		str = str.concat("\nAVERAGE CONTEXT SWAP: " + contextSwap*100 + "%");
 
+//		str = str.concat("\n" + totalTime);
+//		str = str.concat("\n" + processesNumber);
+//		str = str.concat("\n" + throughput ); 
+//		str = str.concat("\n" + turnArround);
+//		str = str.concat("\n" + waitingTime);
+//		str = str.concat("\n" + responseTime);
+//		str = str.concat("\n" + cpuPercentage*100 + "%");
+//		str = str.concat("\n" + contextSwap*100 + "%");
 		
 		return str;
 	}
