@@ -1,5 +1,3 @@
-import java.util.Random;
-
 //Objects from this class can only read from data set, not write
 
 
@@ -11,10 +9,9 @@ public class Reader implements Runnable {
 	}
 	
 	public void run() {
-		Random random = new Random();
 		while (true) {
 			try {
-				Thread.sleep(random.nextInt(100));
+				Thread.sleep(10);
 				dataSet.read();
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block

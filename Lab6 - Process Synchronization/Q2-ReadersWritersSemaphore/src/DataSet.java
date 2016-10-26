@@ -1,78 +1,59 @@
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.Semaphore;
 
 
 public class DataSet {
 	private ArrayList<Integer> data = new ArrayList<Integer>();
-	private boolean writing = false;
-	private boolean reading = false;
-	private final Lock lock = new ReentrantLock();
+	private Semaphore access = new Semaphore(1);
+	private Semaphore mutex = new Semaphore(1);
 	private int readersCount = 0;
 	private int writersCount = 0;
-	private final Condition notWriting = lock.newCondition();
-	private final Condition notReading = lock.newCondition();
 
-	public void incrementReadersCount(){	
-		lock.lock();
-		reading = true;
+	
+	public void incrementReadersCount() throws InterruptedException{
+		mutex.acquire();
 		readersCount++;
-		lock.unlock();
+		mutex.release();
 	}
 	
-	public  void decrementReadersCount(){
-		lock.lock();
+	public void decrementReadersCount() throws InterruptedException{
+		mutex.acquire();
 		readersCount--;
 		if(readersCount == 0){
-			reading = false;
-			writing = false;
-			notReading.signal();
+			access.release();
 		}
-		lock.unlock();
+		mutex.release();
 	}
 	
 	public ArrayList<Integer> read() throws InterruptedException {
-
-		lock.lock();
-		while(writing || data.size() == 0){
-			notWriting.await();
-		}
 		
-		reading=true;
-		lock.unlock();
+		if (readersCount == 0) 
+			access.acquire();
+		
 		
 		incrementReadersCount();
 
-		if(readersCount >1 ){
+		if(readersCount >0 || writersCount > 0 ){
 			System.out.println("============READER============\n" + "Quantidade de leitores: " + readersCount + "\nQuantidade de escritores: " + writersCount + "\n===============================\n");
 		}
-
+		
 		decrementReadersCount();
 		
 		return data;
 	}
 	
 	public void write(int number) throws InterruptedException {
-		lock.lock();
 		
-		while(reading){
-			notReading.await();
-		}
-		
+		access.acquire();
 		
 		writersCount++;
-		writing = true;
 
 		this.data.add(number);
 		
 		System.out.println("============WRITER============\n" + "Quantidade de leitores: " + readersCount + "\nQuantidade de escritores: " + writersCount + "\n===============================\n");
 
-		writing = false;
 		writersCount--;
-		notReading.signal();
-		notWriting.signalAll();
+		access.release();
 		
-		lock.unlock();
 	}
 }	
