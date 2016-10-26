@@ -19,9 +19,6 @@ public class DiningTable {
 			(new Thread(philosopher)).start();
 		}
 		
-//		for (Fork fork : forks) {
-//			System.out.println(fork.getId());
-//		}
 	}
 	
 
