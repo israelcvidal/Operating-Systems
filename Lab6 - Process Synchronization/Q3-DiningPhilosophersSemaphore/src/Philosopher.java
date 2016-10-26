@@ -31,12 +31,13 @@ public class Philosopher implements Runnable{
 	}
 	
 	public void eat() throws InterruptedException{
-		leftFork = forks.get(id);
+		Random rand = new Random();
 		int ind1 = id, ind2;
+
+		leftFork = forks.get(ind1);
 		if( (id-1) == -1){
 			ind2 = forks.size()-1;
 			rightFork = forks.get(ind2);
-			
 		}
 		else{
 			ind2 = id-1;
@@ -52,15 +53,11 @@ public class Philosopher implements Runnable{
 		leftFork.acquire();
 		rightFork.acquire();
 		
-		Random rand = new Random();
-		
 		System.out.println("Philosopher " + this.id + " is eating");
 		Thread.sleep(rand.nextInt(100));
 		
 		leftFork.release();
 		rightFork.release();
-		
-		
 	}
 
 	public int getId() {
