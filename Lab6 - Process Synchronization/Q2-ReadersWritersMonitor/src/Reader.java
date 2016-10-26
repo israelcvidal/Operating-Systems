@@ -14,14 +14,12 @@ public class Reader implements Runnable {
 		Random random = new Random();
 		while (true) {
 			try {
+				Thread.sleep(random.nextInt(100));
 				dataSet.read();
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
-//			try {
-//				Thread.sleep(random.nextInt(100));
-//			} catch (InterruptedException e) { }
+			}	
 		}
 	}
 }	

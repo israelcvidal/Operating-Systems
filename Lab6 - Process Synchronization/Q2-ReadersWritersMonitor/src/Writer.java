@@ -3,11 +3,8 @@ import java.util.Random;
 
 public class Writer implements Runnable {
 	private DataSet dataSet;
-	private static int seq = -1;
-	private int id;
 	public Writer(DataSet dataSet) {
 		this.dataSet = dataSet;
-		this.id = ++seq;
 	}
 	
 	public void run() {
@@ -17,7 +14,6 @@ public class Writer implements Runnable {
 				try {
 					Thread.sleep(random.nextInt(100));
 					dataSet.write(number);
-//					System.out.println("writerId="+id);
 				} catch (InterruptedException e) { }
 		}
 	}
