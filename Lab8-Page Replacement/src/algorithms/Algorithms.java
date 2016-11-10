@@ -16,7 +16,7 @@ public class Algorithms {
 	public Algorithms(String pageString, int numberOfFrames){
 		this.numberOfFrames = numberOfFrames;
 		this.pagesNeeded = new ArrayList<>();
-		this.accessTime = (2*Math.pow(10, -9));
+		this.accessTime = 0.0000002;
 		this.swapTime = 0.002;
 		StringTokenizer stkn = new StringTokenizer(pageString.replace(" ", ""), ",");
 		while(stkn.hasMoreTokens()){
@@ -63,10 +63,12 @@ public class Algorithms {
 		int pageFaults = 0;
 		double totalTime = 0;
 		
-		
+		System.out.println("FIFO:");
+		System.out.println("Frames:");
 		ArrayList<Integer> allocations = new ArrayList<Integer>();
 		
 		for (Integer page : pagesNeeded) {
+			System.out.println(frames);
 			totalTime+=accessTime;
 			if(!frames.contains(page)){
 				pageFaults++;
@@ -83,7 +85,6 @@ public class Algorithms {
 		}
 		
 		double ratio = (swapTime*pageFaults)/totalTime;
-		System.out.println("FIFO:");
 		System.out.println("Pages Needed: " + pagesNeeded);
 		System.out.println("Allocations = " + allocations);
 		System.out.println("Page Faults = " + pageFaults);
@@ -97,7 +98,10 @@ public class Algorithms {
 				
 		ArrayList<Integer> allocations = new ArrayList<Integer>();
 		int i = -1;
+		System.out.println("OPT:");
+		System.out.println("Frames: ");
 		for (Integer page : pagesNeeded) {
+			System.out.println(frames);
 			i++;
 			totalTime+=accessTime;
 
@@ -111,12 +115,12 @@ public class Algorithms {
 				else{
 					HashMap<Integer, Integer> pageDistance = new HashMap<>();
 					for (Integer frame : frames) {
-						for (int k = i; k < pagesNeeded.size(); k++) {
+						for (int k = i; k < pagesNeeded.size(); k++){
 							if(frame == pagesNeeded.get(k)){
 								pageDistance.put(pagesNeeded.get(k), k);
 								break;
 							}
-							else pageDistance.put(pagesNeeded.get(k),1000);
+							else pageDistance.put(frame,1000);
 						}
 					}
 					int optimalKey = frames.get(0);
@@ -134,12 +138,12 @@ public class Algorithms {
 					}
 					frames.remove((Integer)optimalKey);
 					frames.add(page);
+
 				}
 			}
 		}
 		
 		double ratio = (swapTime*pageFaults)/totalTime;
-		System.out.println("OPT:");
 		System.out.println("Pages Needed: " + pagesNeeded);
 		System.out.println("Allocations = " + allocations);
 		System.out.println("Page Faults = " + pageFaults);
@@ -155,8 +159,10 @@ public class Algorithms {
 		HashMap<Integer, Integer> pageCounters = new HashMap<>();
 				
 		ArrayList<Integer> allocations = new ArrayList<Integer>();
-		
+		System.out.println("LRU:");
+		System.out.println("Frames:");
 		for (Integer page : pagesNeeded) {
+			System.out.println(frames);
 			totalTime+=accessTime;
 
 			if(!frames.contains(page)){
@@ -191,7 +197,6 @@ public class Algorithms {
 		}
 		
 		double ratio = (swapTime*pageFaults)/totalTime;
-		System.out.println("LRU:");
 		System.out.println("Pages Needed: " + pagesNeeded);
 		System.out.println("Allocations = " + allocations);
 		System.out.println("Page Faults = " + pageFaults);
@@ -206,8 +211,10 @@ public class Algorithms {
 		HashMap<Integer, Integer> pageCounters = new HashMap<>();
 				
 		ArrayList<Integer> allocations = new ArrayList<Integer>();
-		
+		System.out.println("LFU:");
+		System.out.println("Frames:");
 		for (Integer page : pagesNeeded) {
+			System.out.println(frames);
 			totalTime+=accessTime;
 			if(!frames.contains(page)){
 				pageFaults++;
@@ -250,7 +257,6 @@ public class Algorithms {
 		}
 		
 		double ratio = (swapTime*pageFaults)/totalTime;
-		System.out.println("LFU:");
 		System.out.println("Pages Needed: " + pagesNeeded);
 		System.out.println("Allocations = " + allocations);
 		System.out.println("Page Faults = " + pageFaults);
@@ -266,8 +272,10 @@ public class Algorithms {
 				
 		ArrayList<Integer> allocations = new ArrayList<Integer>();
 		
+		System.out.println("MFU:");
+		System.out.println("Frames:");
 		for (Integer page : pagesNeeded) {
-//			System.out.println(frames);
+			System.out.println(frames);
 			totalTime+=accessTime;
 			if(!frames.contains(page)){
 				pageFaults++;
@@ -310,7 +318,6 @@ public class Algorithms {
 		}
 		
 		double ratio = (swapTime*pageFaults)/totalTime;
-		System.out.println("MFU:");
 		System.out.println("Pages Needed: " + pagesNeeded);
 		System.out.println("Allocations = " + allocations);
 		System.out.println("Page Faults = " + pageFaults);
